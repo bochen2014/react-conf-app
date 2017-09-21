@@ -1,0 +1,14 @@
+{
+    "javascript.validate.enable": false,
+    "javascript.nameSuggestions": false,
+    "flow.pathToFlow": "./node_modules/flow-bin",
+    "flow.enabled": true, 
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/app/build":true
+    }
+}
