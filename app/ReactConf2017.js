@@ -32,14 +32,12 @@ class ReactConf2017 extends Component {
 
   render() {
     const renderScene = (route, navigator) => {
-      const SceneComponent = Scenes[route.scene];
-
+      const SceneComponent = Scenes[route.scene]; // either Info, Schedule (default) or Talk
       return <SceneComponent {...route.props} navigator={navigator} />;
     };
 
-    const TRANSITION_KEYS = Object.keys(Navigator.SceneConfigs);
-
     const configureScene = route => {
+      const TRANSITION_KEYS = Object.keys(Navigator.SceneConfigs);
       if (
         route.transitionKey && !TRANSITION_KEYS.includes(route.transitionKey)
       ) {
@@ -50,15 +48,21 @@ class ReactConf2017 extends Component {
             TRANSITION_KEYS.join('\n') +
             '\n]'
         );
-        return Navigator.SceneConfigs.PushFromRight;
+        return Navigator.SceneConfigs.PushFromRight; // use default transition key if the transition key specified by a route can't be found
       }
 
       return route.transitionKey
-        ? Navigator.SceneConfigs[route.transitionKey]
+        ? Navigator.SceneConfigs[route.transitionKey] // if route specifies one transition key (FloatFromRight, FloatFromRight, FloatFromLeft..etc ), use it;
         : {
-            ...Navigator.SceneConfigs.PushFromRight,
+            ...Navigator.SceneConfigs.PushFromRight, // otherwise , use default + swipe gensture
             gestures: route.enableSwipeToPop
               ? {
+                  /**
+                 * this.props.navigator.push({
+                    enableSwipeToPop: true,
+                    scene: 'Info',
+                  });
+                 */
                   pop: Navigator.SceneConfigs.PushFromRight.gestures.pop,
                 }
               : null,
@@ -67,9 +71,9 @@ class ReactConf2017 extends Component {
 
     return (
       <Navigator
-        configureScene={configureScene}
-        initialRoute={{ scene: DEFAULT_VIEW, index: 0 }}
+        configureScene={configureScene /*transition settings only*/}
         renderScene={renderScene}
+        initialRoute={{ scene: DEFAULT_VIEW, index: 0 }}
         sceneStyle={rawStyles.scenes}
         style={styles.navigator}
       />
