@@ -4,7 +4,11 @@
   "private": true,
   "scripts": {
     "precommit": "lint-staged --verbose",
-    "start": "node_modules/react-native/packager/packager.sh",
+    "start": "node node_modules/react-native/local-cli/cli.js  run-android",
+		"start-bundler": "node node_modules/react-native/local-cli/cli.js  start",
+		"start-release": "node node_modules/react-native/local-cli/cli.js  run-android --variant=release",
+		"build-apk": "npm run clean && cd android && ./gradlew assembleRelease && cp ./app/build/outputs/apk/app-release.apk ../apk-release/",
+		"clean": "rimraf android/app/build",
     "format": "prettier --single-quote --trailing-comma es5 '{app,__{tests,mocks}__}/**/*.js' --write",
     "flow": "flow",
     "test": "jest",
